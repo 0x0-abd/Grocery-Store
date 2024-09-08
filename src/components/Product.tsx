@@ -155,7 +155,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                                 <BoxIcon className=" stroke-white duration-200 hover:scale-110 hover:stroke-blue-400" />
                             </button>
                         )}
-                        <button onClick={handleItemUpdate}>
+                        <button onClick={handleItemUpdate} disabled={isSubmitting}>
                             <CheckIcon className=" stroke-white duration-200 hover:scale-110 hover:stroke-green-400" />
                         </button>
                         <button onClick={deleteProduct}>
