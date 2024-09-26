@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-text-align-last {
+  text-align-last: center;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

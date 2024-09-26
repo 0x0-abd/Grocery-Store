@@ -6,10 +6,10 @@ import { RootState } from "../store/index";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 import AddItemModal from "../components/AddProduct"
 
-export default function Browse(props: { show: string }) {
+export default function Browse() {
     const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
     const user = useTypedSelector((state) => state.user);
-    const view = props.show;
+    const preference = useTypedSelector((state) => state.preference)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inventoryData, setInventoryData] = useState<any[]>([]); // Lifted state
@@ -20,17 +20,17 @@ export default function Browse(props: { show: string }) {
     };
 
     const fetchInventory = async () => {
-        const endpoint = view === "all" ? "admin/inventory" : `admin/inventory/${view}`;
+        const endpoint = preference.showProductTypes === "all" ? `admin/inventory/` : `admin/inventory/${preference.showProductTypes}`;
         const response = await axios.get(endpoint);
         return response.data.items;
     };
 
 
-    const { data, isLoading, isError } = useQuery({ queryKey: ['inventoryData', view], queryFn: fetchInventory });
+    const { data, isLoading, isError } = useQuery({ queryKey: ['inventoryData', preference.showProductTypes], queryFn: fetchInventory });
 
     useEffect(() => {
         if (data) {
-            setInventoryData(data.reverse()); // Set inventory data after fetching
+            setInventoryData(data); // Set inventory data after fetching
         }
     }, [data]);
 
@@ -98,7 +98,7 @@ export default function Browse(props: { show: string }) {
                         </div>
                     </div>
                     <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                        {inventoryData.length > 0 ? inventoryData.map((item: any) => (
+                        {inventoryData.length > 0 ? inventoryData.slice(0).reverse().map((item: any) => (
                             <div className="col-md-3" key={item._id}>
                                 <Product item={item} toggleStockInventory={toggleStock} inStock={item.in_stock} deleteItem={deleteItem} updateItem={updateItem}/>
                             </div>

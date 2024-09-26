@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLogo from "../assets/MainLogo"
 import { RootState } from "../store";
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import { axios } from "../utils/axios";
 import { clearUser } from "../store/userSlice";
+import "../index.css"
+import { setProductType } from "../store/preferenceSlice";
 
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -13,12 +15,13 @@ export default function Navbar() {
     const dispatch = useDispatch();
     const { items: products } = useTypedSelector((state) => state.cart);
     const user = useTypedSelector((state) => state.user);
+    const preference = useTypedSelector((state) => state.preference);
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-        if (dropdownVisible) {
-            setDropdownVisible(false);
-        }
+    const navigate = useNavigate()
+
+    const handleProductTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setProductType(e.target.value));
+        navigate("/browse")
     };
 
     const toggleDropdown_b = () => {
@@ -31,15 +34,15 @@ export default function Navbar() {
     const handleSignOut = async () => {
 
         try {
-          const res = await axios.post("/auth/signout", {}, {
-            withCredentials: true
-          })
-          console.log(res.data.message)
+            const res = await axios.post("/auth/signout", {}, {
+                withCredentials: true
+            })
+            console.log(res.data.message)
         } catch (e) {
-          console.log(e)
+            console.log(e)
         }
         dispatch(clearUser(user));
-      }
+    }
 
     return (
         <nav className="flex top-0 sticky z-20 h-16 px-4 w-full justify-around bg-slate-800 items-center">
@@ -51,62 +54,36 @@ export default function Navbar() {
 
                 </div>
             </Link>
+            <Link to="/browse">
+                <p className="pl-4 pr-4 text-xl text-blue-500 duration-200 hover:scale-110 hover:text-green-500">Explore</p>
+            </Link>
             <form className="max-w-lg ml-auto mr-4">
                 <div className="flex">
                     <label htmlFor="search-dropdown" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
                         Your Email
                     </label>
-                    <button
-                        id="dropdown-button"
-                        onClick={toggleDropdown}
-                        className="flex-shrink-0 z-10 relative inline-flex items-center py-1.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                        type="button"
+                    <label htmlFor="order-type" className="sr-only mb-2 block text-sm font-medium text-gray-900 dark:text-white">Select order type</label>
+                    <select
+                        id="order-type"
+                        onChange={handleProductTypeChange}
+                        value={preference.showProductTypes}
+                        className="
+    flex-shrink-0 z-10 relative inline-flex items-center py-1.5 px-4 
+    text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 
+    rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none 
+    focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 
+    dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 
+    text-center custom-text-align-last
+  "
                     >
-                        All categories
-                        <svg
-                            className="w-2.5 h-2.5 ms-2.5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 10 6"
-                        >
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    {isDropdownOpen && (
-                        <div
-                            id="dropdown"
-                            className="z-10 top-14 -translate-x-4  absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                        >
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                                <li>
-                                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Bakery
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Fruits
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Drinks
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Snacks
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Personal Care
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    )}
+                        <option value="all">All Products</option>
+                        <option value="bakery">Bakery</option>
+                        <option value="fruits">Fruits</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="beverages">Drinks</option>
+                        <option value="personal">Personal</option>
+                    </select>
+
                     <div className="relative w-full">
                         <input
                             type="search"
@@ -138,18 +115,18 @@ export default function Navbar() {
 
                 {user.id ? (
                     <div className="relative">
-                    <div 
-                        className="hover:scale-110 duration-100 cursor-pointer" 
-                        onClick={toggleDropdown_b}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                        </svg>
-                    </div>
-                    {dropdownVisible && (
+                        <div
+                            className="hover:scale-110 duration-100 cursor-pointer"
+                            onClick={toggleDropdown_b}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                            </svg>
+                        </div>
+                        {dropdownVisible && (
                             <div className="absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                     <li>
