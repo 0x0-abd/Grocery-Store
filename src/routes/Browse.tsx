@@ -5,11 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import { RootState } from "../store/index";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 import AddItemModal from "../components/AddProduct"
+import { useLocation } from "react-router-dom";
 
 export default function Browse() {
     const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
     const user = useTypedSelector((state) => state.user);
     const preference = useTypedSelector((state) => state.preference)
+
+    const location = useLocation();
+    const [searchQuery, setSearchQuery] = useState('');
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inventoryData, setInventoryData] = useState<any[]>([]); // Lifted state
@@ -30,9 +34,18 @@ export default function Browse() {
 
     useEffect(() => {
         if (data) {
-            setInventoryData(data); // Set inventory data after fetching
+            const filtered = data.filter((item:any) => 
+                item.item_name.toLowerCase().includes(searchQuery)
+            );
+            setInventoryData(filtered); // Set inventory data after fetching
         }
-    }, [data]);
+    }, [data, searchQuery]);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const query = searchParams.get('search')?.toLowerCase() || '';
+        setSearchQuery(query);
+    }, [location.search])
 
     const updateInventory = (newItem: any) => {
         setInventoryData((prevInventory) => [newItem, ...prevInventory]); // Append new item to inventory

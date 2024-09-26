@@ -16,8 +16,15 @@ export default function Navbar() {
     const { items: products } = useTypedSelector((state) => state.cart);
     const user = useTypedSelector((state) => state.user);
     const preference = useTypedSelector((state) => state.preference);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const navigate = useNavigate()
+
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(!searchQuery || searchQuery === "") navigate('/browse');
+        else navigate(`/browse?search=${searchQuery}`);  // Navigate to the browse page with the search query as a URL parameter
+    };
 
     const handleProductTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch(setProductType(e.target.value));
@@ -57,7 +64,7 @@ export default function Navbar() {
             <Link to="/browse">
                 <p className="pl-4 pr-4 text-xl text-blue-500 duration-200 hover:scale-110 hover:text-green-500">Explore</p>
             </Link>
-            <form className="max-w-lg ml-auto mr-4">
+            <form className="max-w-lg ml-auto mr-4" onSubmit={handleSearch}>
                 <div className="flex">
                     <label htmlFor="search-dropdown" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
                         Your Email
@@ -90,8 +97,27 @@ export default function Navbar() {
                             id="search-dropdown"
                             className="block p-2.5 w-64 z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                             placeholder="Search for Products"
-                            required
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
+                        {searchQuery && (
+                            <button
+                                type="button"
+                                className="absolute top-0 right-10 p-2.5 text-sm font-medium h-full text-gray-400 bg-transparent"
+                                onClick={() => setSearchQuery('')}
+                            >
+                                <svg
+                                    className="w-4 h-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        )}
                         <button
                             type="submit"
                             className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
