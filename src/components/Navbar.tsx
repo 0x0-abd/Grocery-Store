@@ -76,10 +76,10 @@ export default function Navbar() {
                         value={preference.showProductTypes}
                         className="
     flex-shrink-0 z-10 relative inline-flex items-center py-1.5 px-4 
-    text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 
-    rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none 
-    focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 
-    dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 
+    text-sm font-medium  border 
+    rounded-s-lg  focus:ring-4 focus:outline-none 
+     bg-gray-700 hover:bg-gray-600 
+    focus:ring-gray-700 text-white border-gray-600 
     text-center custom-text-align-last
   "
                     >
@@ -95,7 +95,7 @@ export default function Navbar() {
                         <input
                             type="search"
                             id="search-dropdown"
-                            className="block p-2.5 w-64 z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                            className="block p-2.5 w-64 z-20 text-sm  rounded-e-lg  border-s-2 border focus:ring-blue-500  bg-gray-700 border-s-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                             placeholder="Search for Products"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -175,7 +175,7 @@ export default function Navbar() {
 
                 ) : (
                     <Link to="/" className="hover:scale-110 duration-100">
-                        <button type="button" className="w-full rounded-lg border border-green-700 px-3 py-2 text-center text-sm font-medium text-green-700 hover:bg-green-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-900 lg:w-auto">Sign In</button>
+                        <button type="button" className="w-full rounded-lg border  px-3 py-2 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-red-300 border-green-500 text-green-500 hover:bg-green-600 hover:text-white focus:ring-green-900 lg:w-auto">Sign In</button>
                     </Link>
                 )}
                 {/* <a className="hover:scale-110 duration-100">

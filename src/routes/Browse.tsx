@@ -81,27 +81,27 @@ export default function Browse() {
     // }, [inventoryData]);
 
     if (isLoading) return (
-        <section className="bg-gray-50 h-full py-8 antialiased dark:bg-gray-900 md:py-12">
+        <section className=" h-full py-8 antialiased bg-gray-900 md:py-12">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                <h2 className="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Loading...</h2>
+                <h2 className="mt-3 text-xl font-semibold  text-white sm:text-2xl">Loading...</h2>
                 </div>
             </section>
         );
     if (isError) return (
-        <section className="bg-gray-50 h-full py-8 antialiased dark:bg-gray-900 md:py-12">
+        <section className=" h-full py-8 antialiased bg-gray-900 md:py-12">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                <h2 className="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Error Fetching Data</h2>
+                <h2 className="mt-3 text-xl font-semibold  text-white sm:text-2xl">Error Fetching Data</h2>
                 </div>
             </section>
     );
 
     return (
         <>
-            <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+            <section className=" py-8 antialiased bg-gray-900 md:py-12">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                     <div className="mb-4 items-end justify-between space-y-2 sm:flex sm:space-y-0 md:mb-8">
                         <div className="flex w-full justify-between items-center space-x-2">
-                            <h2 className="mt-1 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">All Products</h2>
+                            <h2 className="mt-1 text-xl font-semibold  text-white sm:text-2xl">All Products</h2>
                             {user.isAdmin && (
                                 <button type="button" className="w-full rounded-lg border max-w-sm border-green-700 px-3 py-2 text-center text-lg font-medium text-green-700 hover:bg-green-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-900 lg:w-auto"
                                 onClick={toggleModal}

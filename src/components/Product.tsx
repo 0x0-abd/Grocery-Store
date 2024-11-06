@@ -130,8 +130,8 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
 
     return (
         <div
-            className={`rounded-lg border ${inCart ? 'border-blue-500 dark:border-blue-700' : 'border-gray-200 dark:border-gray-700'
-                } bg-white p-6 shadow-sm  dark:bg-gray-800 relative`}
+            className={`rounded-lg border ${inCart ? ' border-blue-700' : ' border-gray-700'
+                }  p-6 shadow-sm  bg-gray-800 relative`}
         >
             {user.isAdmin && (
                 <button onClick={toggleProductEdit}>
@@ -173,7 +173,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                                 type="text"
                                 id="item_name"
                                 {...register('item_name')}
-                                className="block mt-2 p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                className="block mt-2 p-2.5 w-full  rounded-lg border  focus:ring-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                                 placeholder={item.item_name}
                             />
                             {errors.item_name && <p className="text-red-500 text-sm">{errors.item_name.message}</p>}
@@ -188,7 +188,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                                 type="number"
                                 id="price"
                                 {...register('price', { valueAsNumber: true })}
-                                className="block mt-2 p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                className="block mt-2 p-2.5 w-full  rounded-lg border  focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                                 placeholder={item.price}
                             />
                             {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
@@ -202,7 +202,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                             <textarea
                                 id="item_description"
                                 {...register('item_description')}
-                                className="block mt-2 p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                className="block mt-2 p-2.5 w-full  rounded-lg border  focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                                 placeholder="Description"
                             />
                             {errors.item_description && <p className="text-red-500 text-sm">{errors.item_description.message}</p>}
@@ -216,7 +216,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                             <select
                                 id="category"
                                 {...register('category')}
-                                className="block mt-2 p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                className="block mt-2 p-2.5 w-full  rounded-lg border  focus:ring-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                                 defaultValue={item.category}
                             >
                                 <option value="bakery">Bakery</option>
@@ -237,7 +237,7 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
                                 type="file"
                                 id="image"
                                 onChange={handleFileChange} // Capture file input manually
-                                className="block mt-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                className="block mt-2 w-full rounded-lg border focus:ring-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                             />
                             {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
                         </div>
@@ -255,44 +255,44 @@ export default function Product({ item, toggleStockInventory, deleteItem, update
             ) : (
                 <>
                     <div className="h-60 w-full">
-                        {item.imageUrl ? <img className="mx-auto hidden h-full dark:block rounded-md" src={item.imageUrl} />
+                        {item.imageUrl ? <img className="mx-auto h-full block rounded-md" src={item.imageUrl} />
                             : (
                                 <>
-                                    <img className="mx-auto h-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
-                                    <img className="mx-auto hidden h-full dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+                                    <img className="mx-auto h-full hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
+                                    <img className="mx-auto h-full block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
                                 </>
                             )
                         }
                     </div>
                     <div className="pt-4">
 
-                        <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{item.item_name}</a>
+                        <a href="#" className="text-lg font-semibold leading-tight  hover:underline text-white">{item.item_name}</a>
 
                         <div className="mt-4 flex items-center justify-between gap-4">
-                            <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">Rs. {item.price}</p>
+                            <p className="text-2xl font-extrabold leading-tight  text-white">Rs. {item.price}</p>
 
                             {!inCart ?
                                 (inStock ? (
-                                <button type="button" onClick={handleAddToCart} className="inline-flex items-center rounded-lg w-full border border-green-700 px-3 py-2 text-center text-sm font-medium text-green-700 hover:bg-green-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-900 lg:w-auto">
+                                <button type="button" onClick={handleAddToCart} className="inline-flex items-center rounded-lg w-full border  px-3 py-2 text-center text-sm font-medium focus:outline-none focus:ring-4 border-green-500 text-green-500 hover:bg-green-600 hover:text-white focus:ring-green-900 lg:w-auto">
                                     <svg className="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                                     </svg>
                                     Add to Cart
                                 </button>
                                 ) : (
-                                    <button type="button" disabled className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    <button type="button" disabled className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
                                     Out of Stock
                                 </button>
                                  )
                             )
                                 :
                                 <>
-                                    <button type="button" onClick={handleDecrement} className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    <button type="button" onClick={handleDecrement} className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
                                         -
                                     </button>
 
-                                    <p className="text-xl font-extrabold leading-tight text-gray-900 dark:text-blue-500">{cartItem.quantity}</p>
-                                    <button type="button" onClick={handleAddToCart} className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    <p className="text-xl font-extrabold leading-tight text-blue-500">{cartItem.quantity}</p>
+                                    <button type="button" onClick={handleAddToCart} className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
                                         +
                                     </button>
                                 </>
